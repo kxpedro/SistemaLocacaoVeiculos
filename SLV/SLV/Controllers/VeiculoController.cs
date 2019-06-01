@@ -32,16 +32,16 @@ namespace SLV.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(Models.Veiculo v)
+        public JsonResult Post(Models.Veiculo v)
         {
-            var sql = Connection.Conectar();
+            var sql = Connection.Conectar();            
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM TableFuncionarios", sql);
-            SqlDataAdapter da = new SqlDataAdapter();
-            DataSet ds = new DataSet();
-
-
-            return View();
+            SqlCommand cmd = new SqlCommand("INSERT INTO Veiculos VALUES("+v.IdVeiculo+ "," + v.Marca + "," + v.Modelo + "," + v.Placa + "," + v.ValorFipe + "," + v.AnoFabricacao + "," + v.UltimaRevisao + ")", sql);
+            
+            sql.Open();
+            cmd.ExecuteNonQuery();            
+            sql.Close();
+            return Json(JsonRequestBehavior.AllowGet);
         }
 
         [HttpPut]
