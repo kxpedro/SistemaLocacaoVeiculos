@@ -1,0 +1,58 @@
+﻿@model SLV.Models.Veiculo
+@{ViewBag.Title = "Index";}
+
+<h2>Locação de Veículos</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Placa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnoFabricacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UltimaRevisao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValorFipe)
+        </th>
+        <th>#</th>
+    </tr>
+
+    @*@foreach (var item in Model)
+    {
+    <tr>
+        <th>
+            @Html.DisplayFor(model => model.Marca)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.Modelo)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.Placa)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.AnoFabricacao)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.UltimaRevisao)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.ValorFipe)
+        </th>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+    }*@
+
+</table>
