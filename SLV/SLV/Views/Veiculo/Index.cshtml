@@ -3,6 +3,9 @@
 
 <h2>Locação de Veículos</h2>
 
+
+@Html.ActionLink("Adicionar Veiculo", "Post", new { @controller = "Veiculo" }, new { @class = "btn btn-info" })
+
 <table class="table">
     <tr>
         <th>
@@ -27,32 +30,32 @@
     </tr>
 
     @*@foreach (var item in Model)
-    {
-    <tr>
-        <th>
-            @Html.DisplayFor(model => model.Marca)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.Modelo)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.Placa)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.AnoFabricacao)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.UltimaRevisao)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.ValorFipe)
-        </th>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-    }*@
+        {
+        <tr>
+            <th>
+                @Html.DisplayFor(model => model.Marca)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.Modelo)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.Placa)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.AnoFabricacao)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.UltimaRevisao)
+            </th>
+            <th>
+                @Html.DisplayFor(model => model.ValorFipe)
+            </th>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+        }*@
 
 </table>

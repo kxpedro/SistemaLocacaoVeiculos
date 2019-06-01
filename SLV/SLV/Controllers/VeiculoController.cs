@@ -31,17 +31,25 @@ namespace SLV.Controllers
             return View();
         }
 
-        [HttpPost]
-        public JsonResult Post(Models.Veiculo v)
+        [HttpGet]
+        public ActionResult Post()
         {
-            var sql = Connection.Conectar();            
+            return View();
+        }
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO Veiculos VALUES("+v.IdVeiculo+ "," + v.Marca + "," + v.Modelo + "," + v.Placa + "," + v.ValorFipe + "," + v.AnoFabricacao + "," + v.UltimaRevisao + ")", sql);
-            
-            sql.Open();
-            cmd.ExecuteNonQuery();            
-            sql.Close();
-            return Json(JsonRequestBehavior.AllowGet);
+        [HttpPost]
+        public JsonResult AddNew(Models.Veiculo v)
+        {       
+            try
+            {                
+                Commands.Insert("'"+ v.Marca + "', '" + v.Modelo + "', '" + v.Placa + "', " + v.ValorFipe + ", '" + v.AnoFabricacao.ToString("yyyy/MM/dd") + "', '" + v.UltimaRevisao.ToString("yyyy/MM/dd") + "'", typeof(Models.Veiculo).Name);
+                return Json(new { result = "Comando executado com êxito." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { result = "Erro ao executar comando.", content = e.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
         }
 
         [HttpPut]

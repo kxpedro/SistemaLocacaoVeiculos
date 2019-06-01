@@ -1,0 +1,76 @@
+﻿@model SLV.Models.Veiculo
+
+@{ViewBag.Title = "Index";}
+
+<h2>Adicionar Veículo</h2>
+
+@using (Html.BeginForm("AddNew", "Veiculo", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.HiddenFor(model => model.IdVeiculo)
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Marca, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.Modelo, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Modelo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.Placa, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Placa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Placa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.ValorFipe, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ValorFipe, new { htmlAttributes = new { @class = "form-control", @type = "number"} })
+                @Html.ValidationMessageFor(model => model.ValorFipe, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.AnoFabricacao, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.AnoFabricacao, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.AnoFabricacao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.UltimaRevisao, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.UltimaRevisao, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.UltimaRevisao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index", new { @class = "btn btn-info" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
