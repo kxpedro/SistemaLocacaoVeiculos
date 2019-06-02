@@ -31,6 +31,28 @@ namespace SLV.Controllers
             return View();
         }
 
+        public JsonResult Get(int idVeiculo)
+        {
+            try
+            {
+                var tabela = typeof(Models.Veiculo).Name;
+
+                
+
+                return Json(new { result = "Comando executado com êxito." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { result = "Erro ao executar comando.", e }, JsonRequestBehavior.AllowGet);
+                throw;
+            }            
+        }
+
+
+        /// <summary>
+        /// Página para adicionar novo item
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Post()
         {
@@ -38,25 +60,52 @@ namespace SLV.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddNew(Models.Veiculo v)
+        public JsonResult Post(Models.Veiculo v)
         {       
             try
-            {                
-                Commands.Insert("'"+ v.Marca + "', '" + v.Modelo + "', '" + v.Placa + "', " + v.ValorFipe + ", '" + v.AnoFabricacao.ToString("yyyy/MM/dd") + "', '" + v.UltimaRevisao.ToString("yyyy/MM/dd") + "'", typeof(Models.Veiculo).Name);
+            {
+                var parameters = new List<Models.Veiculo>();
+
+                //Tabela tem de ter o mesmo nome da classe
+                var tabela = typeof(Models.Veiculo).Name;
+
+                Commands.Insert("'" + v.Marca + "', '" + v.Modelo + "', '" + v.Placa + "', " + v.ValorFipe + ", '" + v.AnoFabricacao.ToString("yyyy/MM/dd") + "', '" + v.UltimaRevisao.ToString("yyyy/MM/dd") + "'", tabela);
+
                 return Json(new { result = "Comando executado com êxito." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
-                return Json(new { result = "Erro ao executar comando.", content = e.ToString() }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = "Erro ao executar comando.", e }, JsonRequestBehavior.AllowGet);
                 throw;
             }
         }
 
-        [HttpPut]
-        public ActionResult Put(int idVeiculo)
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult Put()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPut]
+        //public JsonResult Put(int idVeiculo)
+        //{
+        //    try
+        //    {
+        //        var parameters = new List<Models.Veiculo>();
+
+        //        //Tabela tem de ter o mesmo nome da classe
+        //        var tabela = typeof(Models.Veiculo).Name;
+
+        //        Commands.Insert("'" + v.Marca + "', '" + v.Modelo + "', '" + v.Placa + "', " + v.ValorFipe + ", '" + v.AnoFabricacao.ToString("yyyy/MM/dd") + "', '" + v.UltimaRevisao.ToString("yyyy/MM/dd") + "'", tabela);
+
+        //        return Json(new { result = "Comando executado com êxito." }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Json(new { result = "Erro ao executar comando.", e }, JsonRequestBehavior.AllowGet);
+        //        throw;
+        //    }
+        //}
 
         [HttpDelete]
         public ActionResult Delete(int idVeiculo)

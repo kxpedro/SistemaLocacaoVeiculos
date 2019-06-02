@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -16,14 +18,31 @@ namespace SLV.Database
             return sqlConn;
         }
 
-        public static void Insert<T>(T classe, string tabela)
+        public static void Insert<T>(T values, T tabela)
         {
-            var sqlCon = Conectar();
-            SqlCommand cmd = new SqlCommand("INSERT INTO "+tabela+" VALUES ("+classe+")", sqlCon);
+            var sqlCon = Conectar();                      
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO "+tabela+" VALUES ("+ values + ")", sqlCon);
 
             sqlCon.Open();
             cmd.ExecuteNonQuery();
             sqlCon.Close();            
+        }
+
+        public static void Select<T>(T tabela)
+        {
+            var sqlCon = Conectar();
+
+            SqlCommand cmd = new SqlCommand("Select * from " + tabela, sqlCon);
+            DataTable dt = new DataTable();
+
+            sqlCon.Open();
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+
+            sqlCon.Close();
+
         }
 
     }
