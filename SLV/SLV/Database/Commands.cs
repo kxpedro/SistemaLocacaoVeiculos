@@ -22,27 +22,63 @@ namespace SLV.Database
         {
             var sqlCon = Conectar();                      
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO "+tabela+" VALUES ("+ values + ")", sqlCon);
+            SqlCommand cmd = new SqlCommand("INSERT INTO "+ tabela +" VALUES ("+ values + ")", sqlCon);
 
             sqlCon.Open();
             cmd.ExecuteNonQuery();
             sqlCon.Close();            
         }
 
-        public static void Select<T>(T tabela)
+        public static void DeleteAll<T>(T tabela, T campo, T value, T operador)
         {
             var sqlCon = Conectar();
 
-            SqlCommand cmd = new SqlCommand("Select * from " + tabela, sqlCon);
+            SqlCommand cmd = new SqlCommand("DELETE FROM " + tabela + " WHERE " + campo + operador + value, sqlCon);
+
+            sqlCon.Open();
+            cmd.ExecuteNonQuery();
+            sqlCon.Close();
+        }
+
+        public static void DeleteWhere<T>(T tabela, T campo, T value, T operador)
+        {
+            var sqlCon = Conectar();
+
+            SqlCommand cmd = new SqlCommand("DELETE FROM " + tabela + " WHERE " + campo + operador + value, sqlCon);
+
+            sqlCon.Open();
+            cmd.ExecuteNonQuery();
+            sqlCon.Close();
+        }
+
+        public static DataTable SelectAll<T>(T tabela)
+        {
+            var sqlCon = Conectar();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM " + tabela, sqlCon);
             DataTable dt = new DataTable();
 
             sqlCon.Open();
-
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(dt);
-
+            SqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
             sqlCon.Close();
 
+            return dt;
+        }
+
+        public static DataTable SelectWhere<T>(T tabela, T campo, T value, T operador)
+        {
+            var sqlCon = Conectar();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM " + tabela + " WHERE " + campo + operador + value, sqlCon);
+            DataTable dt = new DataTable();
+
+            sqlCon.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
+            sqlCon.Close();
+
+            return dt;
         }
 
     }

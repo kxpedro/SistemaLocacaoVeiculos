@@ -6,111 +6,53 @@ using System.Web.Mvc;
 using SLV.Database;
 using System.Data.SqlClient;
 using System.Data;
+using SLV.Models;
 
 namespace SLV.Controllers
 {
     public class VeiculoController : Controller
     {
+        private Repository repository;
+        public VeiculoController()
+        {
+            repository = Repository.CreateInstance();
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
-            var veiculos = new Models.Veiculo();
-
-            return View(veiculos);
+            //var veiculos = new Models.Veiculo();
+            var list = repository.Select();            
+            return View(list);
         }
 
         [HttpGet]
         public ActionResult Details(int idVeiculo)
         {
-            return View();
+            var list = repository.SelectById(idVeiculo);
+            return View(list);
         }
 
         [HttpGet]
         public ActionResult Get()
         {
-            return View();
+            var list = repository.Select();
+            return View(list);
         }
 
-        public JsonResult Get(int idVeiculo)
-        {
-            try
-            {
-                var tabela = typeof(Models.Veiculo).Name;
-
-                
-
-                return Json(new { result = "Comando executado com êxito." }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                return Json(new { result = "Erro ao executar comando.", e }, JsonRequestBehavior.AllowGet);
-                throw;
-            }            
-        }
-
-
-        /// <summary>
-        /// Página para adicionar novo item
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public ActionResult Post()
+        public ActionResult Post(Models.Veiculo v)
         {
-            return View();
+            repository.Add(v);
+
+            return RedirectToAction("Index");
         }
-
-        [HttpPost]
-        public JsonResult Post(Models.Veiculo v)
-        {       
-            try
-            {
-                var parameters = new List<Models.Veiculo>();
-
-                //Tabela tem de ter o mesmo nome da classe
-                var tabela = typeof(Models.Veiculo).Name;
-
-                Commands.Insert("'" + v.Marca + "', '" + v.Modelo + "', '" + v.Placa + "', " + v.ValorFipe + ", '" + v.AnoFabricacao.ToString("yyyy/MM/dd") + "', '" + v.UltimaRevisao.ToString("yyyy/MM/dd") + "'", tabela);
-
-                return Json(new { result = "Comando executado com êxito." }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception e)
-            {
-                return Json(new { result = "Erro ao executar comando.", e }, JsonRequestBehavior.AllowGet);
-                throw;
-            }
-        }
-
-        //[HttpGet]
-        //public ActionResult Put()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPut]
-        //public JsonResult Put(int idVeiculo)
-        //{
-        //    try
-        //    {
-        //        var parameters = new List<Models.Veiculo>();
-
-        //        //Tabela tem de ter o mesmo nome da classe
-        //        var tabela = typeof(Models.Veiculo).Name;
-
-        //        Commands.Insert("'" + v.Marca + "', '" + v.Modelo + "', '" + v.Placa + "', " + v.ValorFipe + ", '" + v.AnoFabricacao.ToString("yyyy/MM/dd") + "', '" + v.UltimaRevisao.ToString("yyyy/MM/dd") + "'", tabela);
-
-        //        return Json(new { result = "Comando executado com êxito." }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Json(new { result = "Erro ao executar comando.", e }, JsonRequestBehavior.AllowGet);
-        //        throw;
-        //    }
-        //}
 
         [HttpDelete]
         public ActionResult Delete(int idVeiculo)
         {
-            return View();
+            repository.Delete(idVeiculo);
+            return RedirectToAction("Index");
         }
     }
 }
