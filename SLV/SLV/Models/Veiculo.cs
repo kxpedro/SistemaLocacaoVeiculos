@@ -29,6 +29,10 @@ namespace SLV.Models
         [DisplayName("Valor na Tabela Fipe")]
         public double ValorFipe { get; set; }
 
+        [Required(ErrorMessage = "Valor na Tabela Locacao do Veiculo é obrigatóriao")]
+        [DisplayName("Valor na Locacao Fipe")]
+        public double ValorLocacao { get; set; }
+
         [Required(ErrorMessage = "Ano de Fabricacao do Veiculo é obrigatório")]
         [DisplayName("Ano de Fabricação")]
         public DateTime AnoFabricacao { get; set; }
