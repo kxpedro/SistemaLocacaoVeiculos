@@ -1,0 +1,36 @@
+﻿@model LocacaoVeiculos.Models.Veiculo
+
+@{
+    ViewBag.Title = "Locar";
+    var locacao = ViewBag.Locacao as List<LocacaoVeiculos.Models.Locacao>;
+}
+
+<h2>Locar</h2>
+
+<div>
+    <h4>Locacao</h4>
+    <hr />
+    @foreach (var item in locacao)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                Valor Locação
+            </dt>
+
+            <dd>
+                @item.ValorLocado
+            </dd>
+
+            <dt>
+                Veiculo
+            </dt>
+
+            <dd>
+                @Model.Id | @Model.Marca | @Model.Modelo
+            </dd>
+        </dl>
+    }
+</div>
+<p>    
+    @Html.ActionLink("Back to List", "Index")
+</p>

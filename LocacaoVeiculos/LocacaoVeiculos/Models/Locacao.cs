@@ -8,7 +8,7 @@ namespace LocacaoVeiculos.Models
     public class Locacao
     {
         public int Id { get; set; }
-        public int IdVeiculo { get; set; }
-        public int IdUsuario { get; set; }
+        public double ValorLocado { get; set; }
+        public int IdVeiculo { get; set; }        
     }
 }

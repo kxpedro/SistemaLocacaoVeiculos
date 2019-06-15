@@ -9,7 +9,7 @@ namespace LocacaoVeiculos.Models
 {
     public class Database
     {
-        public static SqlConnection StringConnection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=P:\\Repository\\SistemaLocacaoVeiculos\\LocacaoVeiculos\\LocacaoVeiculos\\LocacaoVeiculos\\App_Data\\Database1.mdf;Integrated Security=True");                    
+        public static SqlConnection StringConnection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=P:\\Repository\\SistemaLocacaoVeiculos\\LocacaoVeiculos\\LocacaoVeiculos\\App_Data\\Database1.mdf;Integrated Security=True");                    
         
         public static void Insert(Veiculo v)
         {            
@@ -95,33 +95,30 @@ namespace LocacaoVeiculos.Models
             StringConnection.Close();
 
             var tableList = new List<Veiculo> { };
-            //int numRows;
-            //numRows = ds.Tables["Table"].Rows.Count;
-            //for (int i = 0; i < numRows; i++)
-            //{
-                int id = ds.Tables["Table"].Rows[0].Field<int>("Id");
-                string marca = ds.Tables["Table"].Rows[0].Field<string>("Marca");
-                string modelo = ds.Tables["Table"].Rows[0].Field<string>("Modelo");
-                string placa = ds.Tables["Table"].Rows[0].Field<string>("Placa");
-                decimal valorFipe = ds.Tables["Table"].Rows[0].Field<decimal>("ValorFipe");
-                decimal valorLocacao = ds.Tables["Table"].Rows[0].Field<decimal>("ValorLocacao");
-                DateTime anoFabricacao = ds.Tables["Table"].Rows[0].Field<DateTime>("AnoFabricacao");
-                DateTime ultimaRevisao = ds.Tables["Table"].Rows[0].Field<DateTime>("UltimaRevisao");
 
-                tableList.Add(new Veiculo()
-                {
-                    Id = id,
-                    Marca = marca,
-                    Modelo = modelo,
-                    Placa = placa,
-                    ValorFipe = valorFipe,
-                    ValorLocacao = valorLocacao,
-                    AnoFabricacao = anoFabricacao,
-                    UltimaRevisao = ultimaRevisao
-                });
-            //}
+            int id = ds.Tables["Table"].Rows[0].Field<int>("Id");
+            string marca = ds.Tables["Table"].Rows[0].Field<string>("Marca");
+            string modelo = ds.Tables["Table"].Rows[0].Field<string>("Modelo");
+            string placa = ds.Tables["Table"].Rows[0].Field<string>("Placa");
+            decimal valorFipe = ds.Tables["Table"].Rows[0].Field<decimal>("ValorFipe");
+            decimal valorLocacao = ds.Tables["Table"].Rows[0].Field<decimal>("ValorLocacao");
+            DateTime anoFabricacao = ds.Tables["Table"].Rows[0].Field<DateTime>("AnoFabricacao");
+            DateTime ultimaRevisao = ds.Tables["Table"].Rows[0].Field<DateTime>("UltimaRevisao");
 
+            tableList.Add(new Veiculo()
+            {
+                Id = id,
+                Marca = marca,
+                Modelo = modelo,
+                Placa = placa,
+                ValorFipe = valorFipe,
+                ValorLocacao = valorLocacao,
+                AnoFabricacao = anoFabricacao,
+                UltimaRevisao = ultimaRevisao
+            });
+            
             return tableList.FirstOrDefault(); ;
         }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LocacaoVeiculos.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -16,7 +17,7 @@ namespace LocacaoVeiculos.Controllers
         /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
-        {                   
+        {        
             return View(Database.Select());
         }
 
@@ -116,5 +117,35 @@ namespace LocacaoVeiculos.Controllers
                 return View();
             }
         }
+
+        public ActionResult Locar(int id)
+        {
+            var json = "[{\"Id\":\"1\",\"Marca\":\"Fiat\",\"Modelo\":\"Palio\",\"Placa\":\"AAD44333\",\"ValorFipe\":10500,\"ValorLocacao\":900,\"AnoFabricacao\":\"01/01/2005 00:00:00\",\"UltimaRevisao\":\"01/01/2019 00:00:00\"},{ \"Id\":\"2\",\"Marca\":\"Renault\",\"Modelo\":\"Clio\",\"Placa\":\"SSE1122\",\"ValorFipe\":11500,\"ValorLocacao\":800,\"AnoFabricacao\":\"01/01/2008 00:00:00\",\"UltimaRevisao\":\"01/10/2018 00:00:00\"}]";
+            var dJson = JsonConvert.DeserializeObject<List<Veiculo>>(json);
+            var locacao = new List<Locacao>();
+            var veiculo = Database.Details(id);
+            int i = 0;
+
+            foreach (var item in dJson)
+            {
+                i++;
+                if (item.Marca == veiculo.Marca)
+                {
+                    var desconto = (double)item.ValorLocacao - ((double)item.ValorLocacao * 0.20);                   
+                    veiculo.ValorLocacao = (decimal)desconto;
+
+                    locacao.Add(new Locacao { Id = i, IdVeiculo = veiculo.Id, ValorLocado = desconto });
+                }
+                else
+                {
+                    locacao.Add(new Locacao { Id = i, IdVeiculo = veiculo.Id, ValorLocado = (double)veiculo.ValorLocacao });
+                }
+            }
+
+            ViewBag.Locacao = locacao;
+
+            return View(veiculo);
+        }
+
     }
 }
