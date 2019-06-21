@@ -120,7 +120,8 @@ namespace LocacaoVeiculos.Controllers
 
         public ActionResult Locar(int id)
         {
-            var json = "[{\"Id\":\"1\",\"Marca\":\"Fiat\",\"Modelo\":\"Palio\",\"Placa\":\"AAD44333\",\"ValorFipe\":10500,\"ValorLocacao\":900,\"AnoFabricacao\":\"01/01/2005 00:00:00\",\"UltimaRevisao\":\"01/01/2019 00:00:00\"},{ \"Id\":\"2\",\"Marca\":\"Renault\",\"Modelo\":\"Clio\",\"Placa\":\"SSE1122\",\"ValorFipe\":11500,\"ValorLocacao\":800,\"AnoFabricacao\":\"01/01/2008 00:00:00\",\"UltimaRevisao\":\"01/10/2018 00:00:00\"}]";
+            var json = Api.DadosRequisicao();
+            //var json = "[{\"Id\":\"1\",\"Marca\":\"Fiat\",\"Modelo\":\"Palio\",\"Placa\":\"AAD44333\",\"ValorFipe\":10500,\"ValorLocacao\":900,\"AnoFabricacao\":\"01/01/2005 00:00:00\",\"UltimaRevisao\":\"01/01/2019 00:00:00\"},{ \"Id\":\"2\",\"Marca\":\"Renault\",\"Modelo\":\"Clio\",\"Placa\":\"SSE1122\",\"ValorFipe\":11500,\"ValorLocacao\":800,\"AnoFabricacao\":\"01/01/2008 00:00:00\",\"UltimaRevisao\":\"01/10/2018 00:00:00\"}]";
             var dJson = JsonConvert.DeserializeObject<List<Veiculo>>(json);
             var locacao = new List<Locacao>();
             var veiculo = Database.Details(id);
@@ -131,16 +132,13 @@ namespace LocacaoVeiculos.Controllers
                 i++;
                 if (item.Marca == veiculo.Marca)
                 {
-                    var desconto = (double)item.ValorLocacao - ((double)item.ValorLocacao * 0.20);                   
-                    veiculo.ValorLocacao = (decimal)desconto;
+                    var desconto = (double)veiculo.ValorLocacao - ((double)veiculo.ValorLocacao * 0.20);
+
+                    ViewBag.Desconto = (double)veiculo.ValorLocacao - desconto;
 
                     locacao.Add(new Locacao { Id = i, IdVeiculo = veiculo.Id, ValorLocado = desconto });
                 }
-                else
-                {
-                    locacao.Add(new Locacao { Id = i, IdVeiculo = veiculo.Id, ValorLocado = (double)veiculo.ValorLocacao });
-                }
-            }
+            }           
 
             ViewBag.Locacao = locacao;
 

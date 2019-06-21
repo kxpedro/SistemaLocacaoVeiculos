@@ -5,31 +5,65 @@
     var locacao = ViewBag.Locacao as List<LocacaoVeiculos.Models.Locacao>;
 }
 
-<h2>Locar</h2>
+<div class="row">
+    <div class="col-md-12">
+        <h2>Veiculo locado</h2>
+    </div>
+    <div class="col-md-12">
+        <hr />
+        @if (locacao.Any())
+        {
+            foreach (var item in locacao)
+            {
+                <h4>Desconto aplicado</h4>
+                <dl class="dl-horizontal">
+                    <dt>
+                        Valor Locação
+                    </dt>
 
-<div>
-    <h4>Locacao</h4>
-    <hr />
-    @foreach (var item in locacao)
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                Valor Locação
-            </dt>
+                    <dd>
+                        R$@Model.ValorLocacao
+                    </dd>
+                    <dt>
+                        Valor Locação com Desconto
+                    </dt>
 
-            <dd>
-                @item.ValorLocado
-            </dd>
+                    <dd>
+                        R$@item.ValorLocado,00
+                    </dd>
 
-            <dt>
-                Veiculo
-            </dt>
+                    <dt>
+                        Veiculo
+                    </dt>
 
-            <dd>
-                @Model.Id | @Model.Marca | @Model.Modelo
-            </dd>
-        </dl>
-    }
+                    <dd>
+                        @Model.Id | @Model.Marca | @Model.Modelo
+                    </dd>
+                </dl>
+            }
+        }
+        else
+        {
+            <h4>Nenhum desconto aplicado</h4>
+            <dl class="dl-horizontal">
+                <dt>
+                    Valor Locação
+                </dt>
+
+                <dd>
+                    R$@Model.ValorLocacao
+                </dd>
+
+                <dt>
+                    Veiculo
+                </dt>
+
+                <dd>
+                    @Model.Id | @Model.Marca | @Model.Modelo
+                </dd>
+            </dl>
+        }
+    </div>
 </div>
 <p>    
     @Html.ActionLink("Back to List", "Index")
