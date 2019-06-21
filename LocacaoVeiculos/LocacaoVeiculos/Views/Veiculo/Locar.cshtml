@@ -15,17 +15,9 @@
         {
             foreach (var item in locacao)
             {
-                <h4>Desconto aplicado</h4>
                 <dl class="dl-horizontal">
                     <dt>
                         Valor Locação
-                    </dt>
-
-                    <dd>
-                        R$@Model.ValorLocacao
-                    </dd>
-                    <dt>
-                        Valor Locação com Desconto
                     </dt>
 
                     <dd>
@@ -43,8 +35,7 @@
             }
         }
         else
-        {
-            <h4>Nenhum desconto aplicado</h4>
+        {        
             <dl class="dl-horizontal">
                 <dt>
                     Valor Locação

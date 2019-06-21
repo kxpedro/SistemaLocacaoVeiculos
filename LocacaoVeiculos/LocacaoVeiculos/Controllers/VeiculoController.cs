@@ -17,8 +17,24 @@ namespace LocacaoVeiculos.Controllers
         /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
-        {        
-            return View(Database.Select());
+        {
+            var json = Api.DadosRequisicao();
+            var dJson = JsonConvert.DeserializeObject<List<Veiculo>>(json);
+            var listVeiculo = Database.Select();
+
+            foreach (var j in dJson)
+            {                
+                foreach (var item in listVeiculo)
+                {
+                    if (item.Marca == j.Marca && item.Modelo == j.Modelo && item.ValorLocacao > j.ValorLocacao)
+                    {
+                        var desconto = item.ValorLocacao - (item.ValorLocacao * (decimal)0.20);
+                        item.ValorLocacao = desconto;
+                    }                    
+                }
+            }
+
+            return View(listVeiculo);
         }
 
         /// <summary>
@@ -118,10 +134,10 @@ namespace LocacaoVeiculos.Controllers
             }
         }
 
-        public ActionResult Locar(int id)
+        public ActionResult Locar(int id, decimal valorLocacao)
         {
-            var json = Api.DadosRequisicao();
             //var json = "[{\"Id\":\"1\",\"Marca\":\"Fiat\",\"Modelo\":\"Palio\",\"Placa\":\"AAD44333\",\"ValorFipe\":10500,\"ValorLocacao\":900,\"AnoFabricacao\":\"01/01/2005 00:00:00\",\"UltimaRevisao\":\"01/01/2019 00:00:00\"},{ \"Id\":\"2\",\"Marca\":\"Renault\",\"Modelo\":\"Clio\",\"Placa\":\"SSE1122\",\"ValorFipe\":11500,\"ValorLocacao\":800,\"AnoFabricacao\":\"01/01/2008 00:00:00\",\"UltimaRevisao\":\"01/10/2018 00:00:00\"}]";
+            var json = Api.DadosRequisicao();
             var dJson = JsonConvert.DeserializeObject<List<Veiculo>>(json);
             var locacao = new List<Locacao>();
             var veiculo = Database.Details(id);
@@ -130,13 +146,11 @@ namespace LocacaoVeiculos.Controllers
             foreach (var item in dJson)
             {
                 i++;
-                if (item.Marca == veiculo.Marca)
+                if (item.Marca == veiculo.Marca && item.Modelo == veiculo.Modelo)
                 {
-                    var desconto = (double)veiculo.ValorLocacao - ((double)veiculo.ValorLocacao * 0.20);
+                    //var desconto = (double)valorLocacao - ((double)valorLocacao * 0.20);
 
-                    ViewBag.Desconto = (double)veiculo.ValorLocacao - desconto;
-
-                    locacao.Add(new Locacao { Id = i, IdVeiculo = veiculo.Id, ValorLocado = desconto });
+                    locacao.Add(new Locacao { Id = i, IdVeiculo = veiculo.Id, ValorLocado = (double)valorLocacao });
                 }
             }           
 
